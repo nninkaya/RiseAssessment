@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using Reporting.API.Infrastructure.Repositories;
+using System.Text;
+
 Log.Logger = new LoggerConfiguration() //BITS.128402/A7
     .MinimumLevel.Information()
     .WriteTo.Console()
@@ -14,6 +18,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Host.UseSerilog();
 
+var connectionString = builder.Configuration["ConnectionStrings:ReportDbConnectionString"];
+builder.Services.AddDbContext<ReportDbContext>(p => p.UseNpgsql(connectionString));
 
 var app = builder.Build();
 

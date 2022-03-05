@@ -14,6 +14,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Host.UseSerilog();
 
+var connectionString = builder.Configuration["ConnectionStrings:ContactDbConnectionString"];
+builder.Services.AddDbContext<ContactDbContext>(p => p.UseNpgsql(connectionString));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

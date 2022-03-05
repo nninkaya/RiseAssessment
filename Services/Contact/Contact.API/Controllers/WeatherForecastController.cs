@@ -1,3 +1,4 @@
+
 namespace Contact.API.Controllers
 {
     [ApiController]
@@ -10,15 +11,28 @@ namespace Contact.API.Controllers
     };
 
         private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        private readonly ContactDbContext _context;
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IServiceProvider service)
         {
             _logger = logger;
+            _context = service.GetService<ContactDbContext>();
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
+            var contact = new Contact.API.Models.Contact
+            {
+                FirstName = "Necdet",
+                MiddleName = "Nuri",
+                LastName = "Inkaya",
+                Company = "Kimak"
+            };
+            var contactList = _context.Contacts.Add(contact);
+            _context.SaveChanges();
+
+            var list = _context.Contacts.ToList();
+
             _logger.LogInformation("WeatherForecast");
 
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
