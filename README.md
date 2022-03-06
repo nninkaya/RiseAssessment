@@ -15,7 +15,7 @@
 9. Tanımlı tarayıcıda iki ayrı ugulama açılacaktır. 
 10. Birinci uygulama Telefon Rehberine kişi ve iletişim bilgileri eklemek üzere kullanacağımız Contact.API servis metotlarını sağlamaktadır. 
 11. Uygulama içerisine ön tanımlı olarak bazı kayıtlar oluşturulmuştur. 
-12. Yeni kayıtlar oluşturmak, mevcut kayıtları düzenlemek veya silmek için bu sevis metotlarını kullanabilirsiniz. 
-13. ikinci uygulama ise Telefon Rehberi ile ilgili olşuturulan rapor verisini oluşturmak için kullanılacaktır. 
+12. Yeni kayıtlar oluşturmak, mevcut kayıtları düzenlemek veya silmek için bu servis metotlarını kullanabilirsiniz. 
+13. ikinci uygulama ise Telefon Rehberi ile ilgili oluşturulan rapor verisini oluşturmak için kullanılacaktır. 
 14. Rapor Oluşturmak için önce RequestNewReport metodu ile yeni rapor oluşturulmalı ve dönüş yapısındaki ReportId verisi saklanmalıdır. 
 15. Oluşturulan rapor verilerini almak için ise GetReportResult metoduna oluşturulan rapora ait ReportId verisi yollanmalıdır. 
