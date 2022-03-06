@@ -6,6 +6,7 @@
         {
             ContactInfos = new List<ContactInfo>();
         }
+        [Key]
         public int Id { get; set; }
         public string? Culture { get; set; }
         public string? Name { get; set; }

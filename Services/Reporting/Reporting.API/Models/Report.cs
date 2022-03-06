@@ -8,8 +8,10 @@
         }
 
         public int Id { get; set; }
-        public int Status { get; set; }
+        public ReportStatus Status { get; set; }
         public DateTime? RequestTime { get; set; }
+        public string? ReportContent { get; set; }
+        public DateTime? ReportTime { get; set; }
         public virtual ICollection<ReportItem> ReportItems { get; set; }
     }
 }

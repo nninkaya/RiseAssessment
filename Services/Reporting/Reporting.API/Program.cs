@@ -1,7 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using Reporting.API.Infrastructure.Repositories;
-using System.Text;
-
 Log.Logger = new LoggerConfiguration() //BITS.128402/A7
     .MinimumLevel.Information()
     .WriteTo.Console()
@@ -11,6 +7,10 @@ Log.Logger = new LoggerConfiguration() //BITS.128402/A7
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.AddScoped<IReportingRepository, ReportingRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

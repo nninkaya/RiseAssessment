@@ -1,4 +1,6 @@
-﻿namespace Contact.API.Models
+﻿
+
+namespace Contact.API.Models
 {
     public class Contact
     {
@@ -6,6 +8,7 @@
         {
             ContactInfos = new List<ContactInfo>();
         }
+        [Key]
         public int Id { get; set; }
         public string? FirstName { get; set; }
         public string? MiddleName { get; set; }

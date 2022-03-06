@@ -6,7 +6,15 @@ Log.Logger = new LoggerConfiguration() //BITS.128402/A7
 
 var builder = WebApplication.CreateBuilder(args);
 
+var assemblies = Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll", SearchOption.TopDirectoryOnly)
+    .Where(filePath => Path.GetFileName(filePath).StartsWith("Rise"))
+    .Select(Assembly.LoadFrom);
+
 // Add services to the container.
+
+builder.Services.AddAutoMapper(assemblies);
+
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
