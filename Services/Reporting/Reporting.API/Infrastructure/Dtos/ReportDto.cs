@@ -1,9 +1,7 @@
-﻿namespace Reporting.API.Models
+﻿namespace Reporting.API.Infrastructure.Dtos
 {
-    public class ReportItem
+    public class ReportDto
     {
-        public int Id { get; set; }
-        public int ReportId { get; set; }
         public string Location { get; set; }
         public int NumberOfContacts { get; set; }
         public int NumberOfPhones { get; set; }

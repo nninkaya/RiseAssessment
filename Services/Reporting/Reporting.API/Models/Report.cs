@@ -7,6 +7,7 @@
             ReportItems = new List<ReportItem>();
         }
 
+        [Key]
         public int Id { get; set; }
         public ReportStatus Status { get; set; }
         public DateTime? RequestTime { get; set; }

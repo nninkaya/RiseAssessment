@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Reporting.API.Infrastructure.Repositories;
@@ -11,9 +12,10 @@ using Reporting.API.Infrastructure.Repositories;
 namespace Reporting.API.Migrations
 {
     [DbContext(typeof(ReportDbContext))]
-    partial class ReportDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220306155640_StatusConversionAdded")]
+    partial class StatusConversionAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,15 +57,8 @@ namespace Reporting.API.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Location")
-                        .IsRequired()
+                    b.Property<string>("ReportContent")
                         .HasColumnType("text");
-
-                    b.Property<int>("NumberOfContacts")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("NumberOfPhones")
-                        .HasColumnType("integer");
 
                     b.Property<int>("ReportId")
                         .HasColumnType("integer");
@@ -77,11 +72,13 @@ namespace Reporting.API.Migrations
 
             modelBuilder.Entity("Reporting.API.Models.ReportItem", b =>
                 {
-                    b.HasOne("Reporting.API.Models.Report", null)
+                    b.HasOne("Reporting.API.Models.Report", "Report")
                         .WithMany("ReportItems")
                         .HasForeignKey("ReportId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Report");
                 });
 
             modelBuilder.Entity("Reporting.API.Models.Report", b =>

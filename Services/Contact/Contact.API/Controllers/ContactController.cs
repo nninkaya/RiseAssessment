@@ -1,4 +1,5 @@
-﻿using Contact.API.Infrastructure.Dtos;
+﻿using Contact.API.Infrastructure.Constants;
+using Contact.API.Infrastructure.Dtos;
 using Contact.API.Infrastructure.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -151,15 +152,15 @@ namespace Contact.API.Controllers
         {
             if (contactInfo == null)
             {
-                var error = new ServiceResult()
-                {
-                    ResultCode = 3,
-                    ResultMessage = "Veri yapisi hatali"
-                };
-                return BadRequest(error);
+                return BadRequest(Messages.ModelError);
             }
 
             var result = await _contactRepository.UpdateContactInfoAsync(contactInfo);
+
+            if (result.ResultCode != 0)
+            {
+                return BadRequest(result.ResultMessage);
+            }
 
             return Ok(result);
         }
@@ -176,6 +177,11 @@ namespace Contact.API.Controllers
         {
             var result = await _contactRepository.DeleteContactAsync(id);
 
+            if (result.ResultCode != 0)
+            {
+                return BadRequest(result.ResultMessage);
+            }
+
             return Ok(result);
         }
 
@@ -191,6 +197,11 @@ namespace Contact.API.Controllers
         {
             var result = await _contactRepository.DeleteContactInfoAsync(id);
 
+            if (result.ResultCode != 0)
+            {
+                return BadRequest(result.ResultMessage);
+            }
+
             return Ok(result);
         }
 
@@ -198,6 +209,11 @@ namespace Contact.API.Controllers
         public async Task<IActionResult> GetReport()
         {
             var result = await _contactRepository.GetReport();
+
+            if (result.ResultCode != 0)
+            {
+                return BadRequest(result.ResultMessage);
+            }
 
             return Ok(result);
         }

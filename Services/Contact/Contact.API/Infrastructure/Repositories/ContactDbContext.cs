@@ -50,6 +50,8 @@
                 new ContactInfo { Id = 20, ContactId = 8, InfoTypeId = 2, Value = "+12065556666" },
                 new ContactInfo { Id = 21, ContactId = 8, InfoTypeId = 4, Value = "Austin, TX" }
                 );
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

@@ -12,5 +12,11 @@ namespace Reporting.API.Infrastructure.Repositories
         public DbSet<Report> Report { get; set; }
         public DbSet<ReportItem> ReportItem { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Report>().Property(p => p.Status).HasConversion<int>();
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

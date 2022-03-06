@@ -1,3 +1,6 @@
+using Reporting.API.Consumer;
+using Reporting.API.Services;
+
 Log.Logger = new LoggerConfiguration() //BITS.128402/A7
     .MinimumLevel.Information()
     .WriteTo.Console()
@@ -10,7 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAutoMapper(typeof(Program));
 
+builder.Services.AddScoped<INewReportService, NewReportService>();
 builder.Services.AddScoped<IReportingRepository, ReportingRepository>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -20,6 +25,20 @@ builder.Host.UseSerilog();
 
 var connectionString = builder.Configuration["ConnectionStrings:ReportDbConnectionString"];
 builder.Services.AddDbContext<ReportDbContext>(p => p.UseNpgsql(connectionString));
+
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<ReportingConsumer>();
+
+    x.SetKebabCaseEndpointNameFormatter();
+
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.ConfigureEndpoints(context);
+    });
+});
+
+builder.Services.AddMassTransitHostedService();
 
 var app = builder.Build();
 

@@ -1,3 +1,6 @@
+using Contact.API.Consumer;
+using MassTransit;
+
 Log.Logger = new LoggerConfiguration() //BITS.128402/A7
     .MinimumLevel.Information()
     .WriteTo.Console()
@@ -12,7 +15,7 @@ var assemblies = Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory,
 
 // Add services to the container.
 
-builder.Services.AddAutoMapper(assemblies);
+builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
 
@@ -24,6 +27,20 @@ builder.Host.UseSerilog();
 
 var connectionString = builder.Configuration["ConnectionStrings:ContactDbConnectionString"];
 builder.Services.AddDbContext<ContactDbContext>(p => p.UseNpgsql(connectionString));
+
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<ContactReportConsumer>();
+
+    x.SetKebabCaseEndpointNameFormatter();
+
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.ConfigureEndpoints(context);
+    });
+});
+
+builder.Services.AddMassTransitHostedService();
 
 var app = builder.Build();
 
