@@ -1,7 +1,7 @@
 # RiseAssessment
-## Proje Yapısı
-1. Git üzerinden clone'lanan proje
-2. Sonrasında ise
+## Proje Tanımı
+1. Background Service mimarili Telefon Rehberi uygulamasıdır.
+2. Background Service'ler arası iletişim MassTransit/RabbitMQ üzerinden gerçekleşir. 
 
 ## Projeyi Çalıştırmak için
 1. Proje klasörü altında src klasörü oluşturulmalıdır. 
